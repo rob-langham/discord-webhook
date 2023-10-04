@@ -2,10 +2,13 @@ version: '3'
 
 services:
   express-app:
+    restart: unless-stopped
     build:
       context: .  # Build context is the current directory (where your Dockerfile is located)
       dockerfile: Dockerfile  # Use the specified Dockerfile
     env_file:
       - .env
-    ports:
-      - '3000:3000'  
+    # use docker-compose.override.yml to set the ports
+    # HOST:CONTAINER
+    # ports:
+    #   - '3000:3000'  
