@@ -8,11 +8,8 @@ app.use(bodyParser.text({ type: "*/*" }));
 
 const port = process.env.PORT || 3000;
 
-const id = process.env.WEBHOOK_ID;
-const token = process.env.WEBHOOK_TOKEN;
-
-app.post("/", async (req, res) => {
-  const webhook = `https://discord.com/api/webhooks/${id}/${token}`;
+app.post("/:id/:token", async (req, res) => {
+  const webhook = `https://discord.com/api/webhooks/${req.params.id}/${req.params.token}`;
 
   try {
     await axios.post(webhook, {
