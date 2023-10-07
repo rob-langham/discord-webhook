@@ -24,11 +24,6 @@ app.post("/:id/:token", async (req, res) => {
   }
 });
 
-if (!id || !token) {
-  console.error("Missing Discord Webhook ID or Token");
-  process.exit(1);
-}
-
 app.listen(port, () => {
   console.log(`🚀 Server is running on port ${port}`);
 });
