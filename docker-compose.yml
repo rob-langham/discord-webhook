@@ -8,7 +8,14 @@ services:
       dockerfile: Dockerfile  # Use the specified Dockerfile
     env_file:
       - .env
+    environment:
+      - STORAGE_DIR=/usr/src/app/storage
+    volumes:
+      - storage:/usr/src/app/storage
     # use docker-compose.override.yml to set the ports
     # HOST:CONTAINER
     # ports:
-    #   - '3000:3000'  
+    #   - '3000:3000' 
+
+volumes:
+  - storage
