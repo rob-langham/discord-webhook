@@ -21,7 +21,10 @@ export class TradeQty {
     const entryPrice = parseFloat(entry);
     const slPrice = parseFloat(sl);
 
-    const risk = +(this.storage.get("risk_usdt") || "100");
+    const balance = +(this.storage.get("accountBalance") || "10000");
+    const riskPercentage = +(this.storage.get("riskPercentage") || "0.01");
+
+    const risk = balance * riskPercentage;
     const qty = risk / (entryPrice - slPrice);
 
     return qty.toFixed(2);

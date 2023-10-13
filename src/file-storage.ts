@@ -1,4 +1,4 @@
-export type StorageKey = "risk_usdt";
+export type StorageKey = "risk_usdt" | "riskPercentage" | "accountBalance";
 
 /**
  * A simple key value store that saves to a json file
@@ -44,3 +44,5 @@ export class FileStorage {
     this.fs.writeFileSync(filePath, JSON.stringify(this.storage));
   }
 }
+
+export const storage = new FileStorage();
