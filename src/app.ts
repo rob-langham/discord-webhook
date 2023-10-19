@@ -5,6 +5,7 @@ import axios from "axios";
 import { storage } from "./file-storage";
 import { TradeQty } from "./trade-quantity";
 import "./discord";
+import { EmojiReplacer } from "./emoji-replacer";
 
 const app = express();
 app.use(bodyParser.text({ type: "*/*" }));
@@ -18,7 +19,7 @@ app.post("/public/:id/:token", async (req, res) => {
 
   try {
     await axios.post(webhook, {
-      content: tradeQty.addQty(req.body),
+      content: tradeQty.addQty(EmojiReplacer.injectEmoji(req.body)),
     });
 
     res.status(200).send("");
