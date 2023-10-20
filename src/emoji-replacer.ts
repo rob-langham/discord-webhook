@@ -12,7 +12,7 @@ export class EmojiReplacer {
     let result = str;
     const pattern = /emoji\((-?\d)(,\s*(.*?))?\)/;
     while (result.match(pattern)) {
-      result = str.replace(pattern, (match) => {
+      result = result.replace(pattern, (match) => {
         const key = [1, 3]
           .map((i) => match.replace(pattern, `$${i}`))
           .filter(Boolean)
