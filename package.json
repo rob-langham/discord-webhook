@@ -6,7 +6,8 @@
   "scripts": {
     "dev:to": "ts-node-dev --respawn --transpileOnly src/app.ts",
     "start": "ts-node-dev --respawn src/app.ts",
-    "serve": "ts-node src/app.ts"
+    "serve": "ts-node src/app.ts",
+    "test": "cucumber-js"
   },
   "keywords": [],
   "author": "",
@@ -16,13 +17,16 @@
     "axios": "^1.5.1",
     "body-parser": "^1.20.2",
     "discord.js": "^14.13.0",
-    "express": "^4.18.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "express": "^4.18.2"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^10.0.1",
     "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.19.3",
-    "ts-node-dev": "^2.0.0"
+    "@types/cucumber": "^7.0.0",
+    "pactum": "^3.5.1",
+    "ts-node-dev": "^2.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
