@@ -1,4 +1,4 @@
-export type StorageKey = "risk_usdt" | "riskPercentage" | "accountBalance";
+export type StorageKey = "risk_usdt" | "riskPercentage" | "accountBalance" | string;
 
 /**
  * A simple key value store that saves to a json file
@@ -30,11 +30,11 @@ export class FileStorage {
     this.storage = JSON.parse(raw);
   }
 
-  public get(key: StorageKey): string | undefined {
+  public get(key: StorageKey): any | undefined {
     return this.storage[key];
   }
 
-  public set(key: StorageKey, value: string) {
+  public set(key: StorageKey, value: any) {
     this.storage[key] = value;
     this.save();
   }

@@ -38,4 +38,5 @@ deployCommands().then(() => {
   console.log("Deployed commands!");
 });
 
-client.login(process.env.DISCORD_TOKEN);
+// Disabled for now
+// client.login(process.env.DISCORD_TOKEN);
