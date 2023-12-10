@@ -6,6 +6,7 @@ import { storage } from "./file-storage";
 import { TradeQty } from "./trade-quantity";
 import "./discord";
 import { EmojiReplacer } from "./emoji-replacer";
+import handlebars from "handlebars";
 
 const app = express();
 app.use(bodyParser.json());
@@ -41,7 +42,7 @@ app.put("/template", async (req, res) => {
 
 app.post("/template/test", async (req, res) => {
   console.log(`Request: ${JSON.stringify(req.body, null, 2)}`);
-  const { template: templateName } = req.body;
+  const { template: templateName, ...params } = req.body;
   const { template: storedTemplate, webhook: storedWebhook } = storage.get(
     `template.${templateName}`
   );
@@ -51,19 +52,9 @@ app.post("/template/test", async (req, res) => {
     return;
   }
 
-  // try {
-  //   await axios.post(storedWebhook, {
-  //     content: tradeQty.addQty(EmojiReplacer.injectEmoji(storedTemplate, template)),
-  //   });
+  const template = handlebars.compile(storedTemplate);
 
-  //   res.status(200).send("");
-  // } catch (error) {
-  //   const time = Date.now();
-  //   console.error(time, error);
-  //   res.status(500).send(`Error @ ${time}`);
-  // }
-
-  res.status(200).send(storedTemplate);
+  res.status(200).send(template(params));
 });
 
 app.listen(port, () => {
