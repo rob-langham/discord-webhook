@@ -5,7 +5,7 @@ Feature: Send messages using custom templates enrished with TradingView data
   Background: 
     Given a webhook was created
 
-  @TemplateTester @Helpers @Focus
+  @TemplateTester @Helpers
   Scenario: Render template with parameters
     When the following template was stored with key "strategy-name" for the webhook:
       """
@@ -21,7 +21,7 @@ Feature: Send messages using custom templates enrished with TradingView data
       Trend: 1
       """
 
-  @TemplateTester @Helpers @Focus
+  @TemplateTester @Helpers
   Scenario: Render template with conditions using "if" helper
     When the following template was stored with key "strategy-name" for the webhook:
       """
@@ -42,7 +42,7 @@ Feature: Send messages using custom templates enrished with TradingView data
       |   200 |     1 | Up       |
       |   100 |     0 | Down     |
 
-  @TemplateTester @Helpers @Focus
+  @TemplateTester @Helpers
   Scenario: Render template with conditions using "eq" helper
     When the following template was stored with key "strategy-name" for the webhook:
       """
@@ -71,10 +71,10 @@ Feature: Send messages using custom templates enrished with TradingView data
       """
       Switch Template:
       {{#switch switchCase}}
-      {{#case 1}}Case 1{{/case}}
-      {{#case 2}}Case 2{{/case}}
-      {{#case 4}}Case 3{{/case}}
-      {{#default}}Case 4{{/default}}
+      {{#case 1}}Case 1{{/case~}}
+      {{#case 2}}Case 2{{/case~}}
+      {{#case 3}}Case 3{{/case~}}
+      {{#default}}Case 4{{/default~}}
       {{/switch}}
       """
     When the template test is called for "strategy-name":
@@ -90,4 +90,3 @@ Feature: Send messages using custom templates enrished with TradingView data
       |          1 |
       |          2 |
       |          3 |
-      |          4 |

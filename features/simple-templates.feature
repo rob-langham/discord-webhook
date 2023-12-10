@@ -1,7 +1,7 @@
 Feature: Send simple mesages with templates
   Admins can store templates so they can be used dynamically from TradingView alerts
 
-  @TemplateTester @Focus
+  @TemplateTester
   Scenario: Store and test a template
     Given a webhook was created
     When the following template was stored with key "strategy-name" for the webhook:

@@ -16,6 +16,25 @@ handlebars.registerHelper("eq", function (this: any, a, b, opts) {
   }
 });
 
+handlebars.registerHelper("switch", function (this: any, value, options) {
+  this.switch_value = value;
+  this.switch_break = false;
+  return options.fn(this);
+});
+
+handlebars.registerHelper("case", function (this: any, value, options) {
+  if (value == this.switch_value) {
+    this.switch_break = true;
+    return options.fn(this);
+  }
+});
+
+handlebars.registerHelper("default", function (this: any, value, options) {
+  if (this.switch_break == false) {
+    return options.fn(this);
+  }
+});
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: "*/*" }));
