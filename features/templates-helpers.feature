@@ -63,7 +63,7 @@ Feature: Send messages using custom templates enrished with TradingView data
       |   100 |     1 | Up       |
       |   100 |    -1 | Down     |
 
-  @TemplateTester @Helpers
+  @TemplateTester @Helpers @Focus
   Scenario: Render template "switch" statement
     This feature is useful for custom alerts so that only one alert is required per indicator/strategy.
 
