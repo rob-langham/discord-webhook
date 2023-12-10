@@ -7,6 +7,14 @@ import { DataTable } from "@cucumber/cucumber";
 
 const appUrl = `http://localhost:${process.env.PORT || 3000}`;
 
+function parseInts(dataTable: { [k: string]: string }): { [k: string]: number | string } {
+  const rows = Object.entries(dataTable).map(([key, value]) => [
+    key,
+    isNaN(+value) ? value : +value,
+  ]);
+  return Object.fromEntries(rows);
+}
+
 when(
   "the following template was stored with key {string} for the webhook:",
   async function (templateName: string, template: string) {
@@ -41,8 +49,7 @@ when(
 when(
   "the template test is called for {string}:",
   async function (template: string, dataTable: DataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    const params = dataTable.rowsHash();
+    const params = parseInts(dataTable.rowsHash());
     this.spec = spec();
     await this.spec
       .post(`${appUrl}/template/test`)

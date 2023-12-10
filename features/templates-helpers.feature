@@ -26,9 +26,9 @@ Feature: Send messages using custom templates enrished with TradingView data
     When the following template was stored with key "strategy-name" for the webhook:
       """
       Price: {{close}}
-      Trend: {{if trend}}Up{{else}}Down{{/if}}
+      Trend: {{#if trend}}Up{{else}}Down{{/if}}
       """
-    When the template test is called with parameters:
+    When the template test is called for "strategy-name":
       | close | <close> |
       | trend | <trend> |
     Then the template is rendered as:
@@ -42,16 +42,16 @@ Feature: Send messages using custom templates enrished with TradingView data
       |   200 |     1 | Up       |
       |   100 |     0 | Down     |
 
-  @TemplateTester @Helpers
+  @TemplateTester @Helpers @Focus
   Scenario: Render template with conditions using "eq" helper
     When the following template was stored with key "strategy-name" for the webhook:
       """
       Price: {{close}}
       Trend: {{#if (eq trend 1)}}Up{{else}}Down{{/if}}
       """
-    When the template test is called with parameters:
-      | close   | trend   |
-      | <close> | <trend> |
+    When the template test is called for "strategy-name":
+      | close | <close> |
+      | trend | <trend> |
     Then the template is rendered as:
       """
       Price: 100
@@ -77,9 +77,8 @@ Feature: Send messages using custom templates enrished with TradingView data
       {{#default}}Case 4{{/default}}
       {{/switch}}
       """
-    When the template test is called with parameters:
-      | switchCase   |
-      | <switchCase> |
+    When the template test is called for "strategy-name":
+      | switchCase | <switchCase> |
     Then the template is rendered as:
       """
       Switch Template:

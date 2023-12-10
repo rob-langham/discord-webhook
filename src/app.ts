@@ -8,6 +8,14 @@ import "./discord";
 import { EmojiReplacer } from "./emoji-replacer";
 import handlebars from "handlebars";
 
+handlebars.registerHelper("eq", function (this: any, a, b, opts) {
+  if (a == b) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: "*/*" }));
@@ -34,27 +42,29 @@ app.post("/public/:id/:token", async (req, res) => {
 
 app.put("/template", async (req, res) => {
   const { name, template, webhook } = req.body;
-  console.log(`Request: ${req.body}`);
   storage.set(`template.${name}`, { template, webhook });
-  console.log(`Stored template ${name}`);
   res.sendStatus(204);
 });
 
 app.post("/template/test", async (req, res) => {
-  console.log(`Request: ${JSON.stringify(req.body, null, 2)}`);
-  const { template: templateName, ...params } = req.body;
-  const { template: storedTemplate, webhook: storedWebhook } = storage.get(
-    `template.${templateName}`
-  );
+  try {
+    const { template: templateName, ...params } = req.body;
+    const { template: storedTemplate, webhook: storedWebhook } = storage.get(
+      `template.${templateName}`
+    );
 
-  if (!storedTemplate || !storedWebhook) {
-    res.status(400).send("Template not found");
-    return;
+    if (!storedTemplate || !storedWebhook) {
+      res.status(400).send("Template not found");
+      return;
+    }
+
+    const template = handlebars.compile(storedTemplate);
+
+    res.status(200).send(template(params));
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
   }
-
-  const template = handlebars.compile(storedTemplate);
-
-  res.status(200).send(template(params));
 });
 
 app.listen(port, () => {
